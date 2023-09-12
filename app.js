@@ -166,7 +166,7 @@ function getTotals() {
     .map((transaction) => Number(transaction.amount));
 
   const amountExpenses = items
-    .filter((item) => item.type === "Saída")
+    .filter((item) => item.type === "Saida")
     .map((transaction) => Number(transaction.amount));
 
   const totalIncomes = amountIncomes
