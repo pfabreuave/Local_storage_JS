@@ -15,7 +15,8 @@ const descItem = document.querySelector("#desc"); // Selecciona elementos HTML p
 const amount = document.querySelector("#amount"); // Selecciona elementos HTML por su identificador (ID).
 const type = document.querySelector("#type"); // Selecciona elementos HTML por su identificador (ID).
 const btnNew = document.querySelector("#btnNew"); // botón para agregar nuevos registros.
-const btnClearStorage = document.querySelector("#btnClearStorage"); // botón para eliminar todos los registros 
+const btnClearStorage = document.querySelector("#btnClearStorage"); // botón para eliminar todos los registros
+ 
 
 
 const incomes = document.querySelector(".incomes"); // Selecciona elementos HTML con la clase / muestra ingresos
@@ -65,6 +66,32 @@ btnNew.onclick = () => {
   descItem.value = "";
   amount.value = "";
 };
+
+/*
+  manejador de eventos al botón de descarga para que, cuando el usuario haga clic, 
+  se cree el archivo CSV y se ofrezca para su descarga.
+
+*/
+
+const downloadButton = document.querySelector('#downloadButton');
+
+downloadButton.addEventListener('click', () => {
+  const csvData = convertToCSV(items);
+  const blob = new Blob([csvData], { type: 'text/csv' });
+  const url = window.URL.createObjectURL(blob);
+
+  // Crea un enlace para descargar el archivo
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'registros.csv';
+
+  // Simula un clic en el enlace para iniciar la descarga
+  a.click();
+
+  // Libera recursos
+  window.URL.revokeObjectURL(url);
+});
+
 
 /*
   Función `deleteItem(index)`:
@@ -199,6 +226,34 @@ const setItensBD = () =>
       items = [];
     }
   }
+
+
+  /*
+    Esta función toma el arreglo de registros items y lo convierte en un formato CSV. 
+    Cada registro se convierte en una fila en el archivo CSV, y los encabezados se agregan 
+    al principio del archivo. genera el archivo CSV que luego los usuarios pueden descargar 
+    y compartir manualmente.
+
+  */
+
+  function convertToCSV(items) {
+    const csvRows = [];
+    
+    // Encabezados CSV
+    csvRows.push(['Descripción', 'Cantidad', 'Tipo']);
+  
+    // Convertir registros en filas CSV
+    for (const item of items) {
+      const row = [item.desc, item.amount, item.type];
+      csvRows.push(row);
+    }
+  
+    // Combinar filas en un solo string CSV
+    const csvData = csvRows.map(row => row.join(',')).join('\n');
+  
+    return csvData;
+  }
+  
 
 /*
   Llama a `loadItens()` al final para cargar inicialmente los registros y los totales cuando se carga la página.
