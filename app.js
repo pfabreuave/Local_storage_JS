@@ -25,6 +25,14 @@ const total = document.querySelector(".total"); // Selecciona elementos HTML con
 
 let items;
 
+
+
+btnClearStorage.addEventListener("click", () => {
+  // Llama a una función para eliminar los datos almacenados
+  clearStorage();
+});
+
+
 /*
   Evento `onclick` para el botón `btnNew`:
    - Se verifica si los campos `descItem`, `amount` y `type` están vacíos y muestra una alerta si es así.
@@ -35,11 +43,6 @@ let items;
    - Finalmente, se borran los valores de los campos `descItem` y `amount`.
 
 */
-
-btnClearStorage.addEventListener("click", () => {
-  // Llama a una función para eliminar los datos almacenados
-  clearStorage();
-});
 
 btnNew.onclick = () => {
   if (descItem.value === "" || amount.value === "" || type.value === "") {
