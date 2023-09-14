@@ -41,13 +41,6 @@ btnClearStorage.addEventListener("click", () => {
   clearStorage();
 });
 
-
-
-/*
-  manejador de evento para el botón que llamará la función para eliminar los datos almacenados. 
-
-*/
-
 btnNew.onclick = () => {
   if (descItem.value === "" || amount.value === "" || type.value === "") {
     return alert("Preencha todos os campos!");
